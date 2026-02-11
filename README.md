@@ -1,4 +1,4 @@
-# RP2040-FreeRTOS try 1.0.0
+# RP2040-FreeRTOS I2C Slave 1.0.0
 
 This repo contains project for [FreeRTOS](https://freertos.org/) on the Raspberry Pi RP2040 microcontroller
 
