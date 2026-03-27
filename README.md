@@ -37,6 +37,8 @@ This App exercises the I2C Slave software provided by **Valentin Milea <valentin
 
 My original problem was to find a way to read a Text file into the Pico which would then read each character and send its equivalent as Morse Code, (CW).  I did not have a file system on the Pico so bringing the characters in using the I2C interface looked doable.  I read the text file with a RPi Zero, then send each character to the front of a Ring Buffer on the Pico.  A FreeRTOS Queue reads the tail of the Ring File and offers the character to the CW task which picks it up the next time it needs a character.
 The Ring Buffer is formed on the data structure provided for the I2C Slave interface.
+The Code version name ending in "Sp" is Code which reads the Words/Minute (WPM) from the first line of the Text 
+file to set the CW code speed from 10 WPM to 26 WPM.
 
 ## Supporting Functionality
 
