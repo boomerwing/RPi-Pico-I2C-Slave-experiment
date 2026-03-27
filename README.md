@@ -43,11 +43,13 @@ file to set the CW code speed from 10 WPM to 26 WPM.
 ## Supporting Functionality
 
 
-The I2C functionality feeds a CW task which accepts ASCII characters from the I2C Master and outputs Morse Code Dits and Dahs.
-An A/D task reads a variable resister value and converts it to sixteen levels.  These sixteen levels are converted to timer delay values to give code speeds of 10 WPM (Words per Minute) to 26 WPM. These code speed values are transfered to the Timer generating the dot delay times.
+The I2C Slave functionality feeds a CW task which accepts ASCII characters from the I2C Master and outputs Morse Code Dits and Dahs.
+
 A Switch Debounce task provides a start signal to initiate reading the text and sending the Morse code. The start signal is sent from the I2C Slave back to the I2C Master to initiate Text reading.
 A PCF8575 GPIO Extender is added on the Pico as a second I2C interface to provide more switch inputs and an LED CODE Speed indication.
-An application, **I2C-Slave-RingBuf-input.cpp** is provided to run on the RPi to provide the I2C Master.
+An application, **RPi-Text-Reader.cpp** is provided to run on the RPi to provide the I2C Master.
+Various Text files are provided for Practice of Code reading.
+The Apps which contain Sp in the name also read the desired code speed from the first line of the Text File to set the speed between 10 Words per Minute (WPM) to 26 WPM.
 
 
 ## Credits
