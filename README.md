@@ -50,7 +50,7 @@ A PCF8575 GPIO Extender is added on the Pico as a second I2C interface to provid
 An application, **RPi-Text-Reader.cpp** is provided to run on the RPi to provide the I2C Master.
 Various Text files are provided for Practice of Code reading.
 The Apps which contain Sp in the name also read the desired code speed from the first line of the Text File to set the speed between 10 Words per Minute (WPM) to 26 WPM.
-
+The App which contains "noGate" in the name uses the SDK pio command "pio_sm_set_enabled" to switch the pio Square Wave OFF and ON to create the 5oo Hz CW Audio signal.
 
 ## Credits
 
