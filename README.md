@@ -35,22 +35,22 @@ This App exercises the I2C Slave software provided by **Valentin Milea <valentin
 
 ## The I2C Functionality
 
-My original problem was to find a way to read a Text file into the Pico which would then read each character and send its equivalent as Morse Code, (CW).  I did not have a file system on the Pico so bringing the characters in using the I2C interface looked doable.  I read the text file with a RPi Zero, then send each character to the front of a Ring Buffer on the Pico.  A FreeRTOS Queue reads the tail of the Ring File and offers the character to the CW task which picks it up the next time it needs a character.
+My original problem was to find a way to read a Text file into the Pico which would then read each character and send its equivalent as Morse Code, **CW**.  I did not have a file system on the Pico so bringing the characters in using the I2C interface looked doable.  I read the text file with a **RPi Zero**, then send each character to the front of a Ring Buffer on the Pico.  A FreeRTOS Queue reads the tail of the Ring Buffer and offers the character to the CW task which picks it up the next time it needs a character.
 The Ring Buffer is formed on the data structure provided for the I2C Slave interface.
-The Code version name ending in "Sp" is Code which reads the Words/Minute (WPM) from the first line of the Text 
-file to set the CW code speed from 10 WPM to 26 WPM.
 
 ## Supporting Functionality
-
 
 The I2C Slave functionality feeds a CW task which accepts ASCII characters from the I2C Master and outputs Morse Code Dits and Dahs.
 
 A Switch Debounce task provides a start signal to initiate reading the text and sending the Morse code. The start signal is sent from the I2C Slave back to the I2C Master to initiate Text reading.
+
 A PCF8575 GPIO Extender is added on the Pico as a second I2C interface to provide more switch inputs and an LED CODE Speed indication.
-An application, **RPi-Text-Reader.cpp** is provided to run on the RPi to provide the I2C Master.
-Various Text files are provided for Practice of Code reading.
-The Apps which contain Sp in the name also read the desired code speed from the first line of the Text File to set the speed between 10 Words per Minute (WPM) to 26 WPM.
-The App which contains "noGate" in the name uses the SDK pio command "pio_sm_set_enabled" to switch the pio Square Wave OFF and ON to create the 5oo Hz CW Audio signal.
+
+An application, **RPi-Text-Reader.cpp** is provided to run on the RPi to provide the I2C Master. **RPi-TEXT-Reader-Sp.cpp** also reads the Code speed setting from the first line of the Text file to set the speed between 10 Words per Minute *WPM** to 26 WPM..
+
+Various Text files are provided for Code Reading Practice.
+
+The App which contains **noGate** in the name uses the SDK pio command **pio_sm_set_enabled** to switch the pio Square Wave **OFF** and **ON** to create the 5oo Hz CW Audio signal. The Apps without the **noGate** use an external NAND or NOR gate to combine a continuous 500 HZ square wave with the CW ON/OFF output.
 
 ## Credits
 
