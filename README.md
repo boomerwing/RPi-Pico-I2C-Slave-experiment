@@ -5,14 +5,6 @@ This repo contains project for [FreeRTOS](https://freertos.org/) on the Raspberr
 ## Project Structure
 
 ```
-/FreeRTOS-CW-I2C
-|___/App-CW-I2C-Slave/main_I2C_Slave_PCF8575.c    // Source code for App-CW-I2C-Slave adding a PCF8575 GPIO extender
-|___/Common                 // Source code common to applications - pico
-|___CMakeLists.txt          // Top-level project CMake config file
-|___/App-CW-I2C-Slave/I2C_Slave-RingBuf-input.cpp  // RPi code for I2C Master reading TXT files
-|___README.md
-|___LICENSE.md
-```
 
 ## Prerequisites
 
@@ -36,23 +28,26 @@ This App exercises the I2C Slave software provided by **Valentin Milea <valentin
 ## The I2C Functionality
 
 My original problem was to find a way to read a Text file into the Pico which would then read each character and send its equivalent as Morse Code, **CW**.  I did not have a file system on the Pico so bringing the characters in using the I2C interface looked doable.  I read the text file with a **RPi Zero**, then send each character to the front of a Ring Buffer on the Pico.  A FreeRTOS Queue reads the tail of the Ring Buffer and offers the character to the CW task which picks it up the next time it needs a character.
-The Ring Buffer is formed on the data structure provided for the I2C Slave interface.
+The Ring Buffer is formed on the global data structure provided for the I2C Slave interface.
+I provide code for both a Pico and Pimoroni Tiny.
 
 ## Supporting Functionality
 
 The I2C Slave functionality feeds a CW task which accepts ASCII characters from the I2C Master and outputs Morse Code Dits and Dahs.
 
-A Switch Debounce task provides a start signal to initiate reading the text and sending the Morse code. The start signal is sent from the I2C Slave back to the I2C Master to initiate Text reading.
+An application, **RPi-Text-Reader-Cmd.cpp is provided to run on the RPi to create the I2C Master. **RPi-TEXT-Reader-Cmd.cpp** is loaded with the 
+name of the file to be read and presents a table of Code speeds with which you can select the code speed (10 WPM to 25 WPM) on starting.
 
-A PCF8575 GPIO Extender is added on the Pico as a second I2C interface to provide more switch inputs and an LED CODE Speed indication.
+You can use the switch of the Tiny or the Boot switch of the Tiny to lengthen the space between characters.
 
-An application, **RPi-Text-Reader.cpp** is provided to run on the RPi to provide the I2C Master. **RPi-TEXT-Reader-Sp.cpp** also reads the Code speed setting from the first line of the Text file to set the speed between 10 Words per Minute *WPM** to 26 WPM..
+I feed the Audio output into an ordinary PC external Audio module.
+
+Load the Pico or Tiny with its Application code, then start the RPi with ./RPi-Text-Reader-Cmd Code-Groups.txt. As soon as you select a Code Speed you
+will have Morse character tones on the Audio output GPIO.
 
 Various Text files are provided for Code Reading Practice.
 
-The App which contains **noGate** in the name uses the SDK pio command **pio_sm_set_enabled** to switch the pio Square Wave **OFF** and **ON** to create the 5oo Hz CW Audio signal. The Apps without the **noGate** use an external NAND or NOR gate to combine a continuous 500 HZ square wave with the CW ON/OFF output.
-
-## Credits
+The Pico and Tiny Apps use the SDK pio command **pio_sm_set_enabled** to switch the pio Square Wave **OFF** and **ON** to create the 5oo Hz CW Audio signal. 
 
 This work has as its foundation the code provided by [smittytone/RP2040-FreeRTOS project](https://github.com/smittytone/RP2040-FreeRTOS).
 
